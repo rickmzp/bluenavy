@@ -1,0 +1,9 @@
+= form_for @game, url: games_path, method: :post do |f|
+  = f.error_messages
+
+  %ul
+    %li.player_1
+      = f.label :player_1, "Name"
+      = f.text_field :player_1
+    %li.actions
+      = f.submit "Create Game"
