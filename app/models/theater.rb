@@ -31,6 +31,20 @@ class Theater
     grid[x][y]
   end
 
+  def any_empty_cell
+    each_cell do |cell|
+      return cell if cell.empty?
+    end
+  end
+
+  def each_cell
+    grid.each do |row|
+      row.each do |cell|
+        yield(cell)
+      end
+    end
+  end
+
   private
 
   def ensure_deployment_fits(deployment)

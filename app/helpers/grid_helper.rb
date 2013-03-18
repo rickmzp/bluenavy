@@ -1,7 +1,10 @@
 module GridHelper
   def render_cell(cell)
     dom_classes = []
-    dom_classes << "attacked" if cell.attacked?
+    if cell.attacked?
+      dom_classes << "attacked"
+      dom_classes << cell.attack.result
+    end
     dom_classes << cell.point.to_sym.to_s.downcase
 
     capture_haml do

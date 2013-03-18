@@ -20,6 +20,18 @@ class Attack < Deployment
   alias_method :successful?, :persisted?
   alias_method :completed?, :persisted?
 
+  def hit?
+    player.opponent.defensive.at(target).has_ship?
+  end
+
+  def miss?
+    !hit?
+  end
+
+  def result
+    hit? ? :hit : :miss
+  end
+
   def vectors
     [target]
   end

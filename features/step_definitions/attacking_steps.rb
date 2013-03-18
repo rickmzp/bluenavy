@@ -39,8 +39,19 @@ When(/^the enemy fires a missile at a grid point occupied by my navy$/) do
   @attack = current_player.opponent.attack(my_ships_point)
 end
 
+When(/^the enemy fires a missile at an empty grid point$/) do
+  empty_point = current_player.offensive.any_empty_cell.point
+  @attack = current_player.opponent.attack(empty_point)
+end
+
 Then(/^I receive a report of their attack's success$/) do
   reload_page
   page.should have_css("#attack_#{@attack.id}.completed")
-  page.should have_css("#defensive_theater .#{@attack.target.to_sym.to_s.downcase}.attacked")
+  page.should have_css("#defensive_theater .#{@attack.target.to_sym.to_s.downcase}.attacked.hit")
+end
+
+Then(/^I receive a report of their attack's failure$/) do
+  reload_page
+  page.should have_css("#attack_#{@attack.id}.completed")
+  page.should have_css("#defensive_theater .#{@attack.target.to_sym.to_s.downcase}.attacked.miss")
 end
