@@ -5,7 +5,7 @@ module GridSupport
   end
 
   def vector_to_symbol(vector)
-    :"#{rows[x]}#{columns[y]}"
+    :"#{rows[y]}#{columns[x]}"
   end
 
   def ensure_valid_vector!(symbol, letter, number)

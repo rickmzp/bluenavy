@@ -13,7 +13,7 @@ When(/^I fire a missile at a grid point$/) do
 end
 
 Then(/^a missle explodes at that grid point$/) do
-  page.should have_css("#opposing_grid .#{@grid_point.to_s.downcase}.attacked")
+  page.should have_css("#offensive_theater .#{@grid_point.to_s.downcase}.attacked")
 end
 
 Then(/^I receive a report on the attack's result$/) do

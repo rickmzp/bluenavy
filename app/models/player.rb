@@ -30,7 +30,10 @@ class Player
   end
 
   def attack(point)
-    game.attack_by(self, target: point)
+    attack = game.attack_by(self, target: point)
+    offensive.deploy(attack)
+    game.save!
+    attack
   end
 
   def offensive

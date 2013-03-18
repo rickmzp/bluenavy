@@ -18,4 +18,8 @@ class Attack < Deployment
   end
 
   alias_method :successful?, :persisted?
+
+  def vectors
+    [target]
+  end
 end

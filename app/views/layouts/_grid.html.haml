@@ -9,4 +9,4 @@
       %tr
         %th= row
         - theater.columns.each_with_index do |column, x|
-          = render_point(theater.at([x, y]))
+          = render_cell(theater.at([x, y]))

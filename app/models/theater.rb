@@ -1,5 +1,4 @@
 class Theater
-  include Mongoid::Document
   include GridSupport
 
   class << self
@@ -7,15 +6,11 @@ class Theater
   end
 
   def initialize(deployments = [])
-    super()
-    self.deployments = deployments
+    @deployments = deployments
+    place_deployments_on_grid
   end
 
-  after_initialize :place_deployments_on_grid
-
-  embedded_in :navy, inverse_of: :strategy
-
-  embeds_many :deployments, class_name: "ShipDeployment"
+  attr_reader :deployments
 
   def height
     rows.count
@@ -25,20 +20,10 @@ class Theater
     columns.count
   end
 
-  def deploy_ship(ship, start_point, direction)
-    deployment = ShipDeployment.new(ship, Point.from(start_point), direction)
-    ensure_deployment_fits(deployment)
+  def deploy(deployment)
     place_on_grid(deployment)
     deployments << deployment
     deployment
-  end
-
-  def randomly_deploy_ship(ship)
-    Rails.logger.info "random"
-    # TODO: expand grid
-    point = Point.from([rand(5), rand(5)])
-    direction = (rand(2) == 1 ? :horizontal : :vertical)
-    deploy_ship(ship, point, direction)
   end
 
   def at(point)

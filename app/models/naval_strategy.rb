@@ -25,5 +25,31 @@ class NavalStrategy < Theater
     end
   end
 
+  include Mongoid::Document
+
+  def initialize(deployments = [])
+    super(deployments: deployments)
+  end
+
+  after_initialize :place_deployments_on_grid
+
+  embedded_in :navy, inverse_of: :strategy
+
+  embeds_many :deployments, class_name: "Deployment"
+  attr_accessible :deployments
+
   alias_method :ship_at, :at
+
+  def deploy_ship(ship, start_point, direction)
+    deployment = ShipDeployment.new(ship, Point.from(start_point), direction)
+    ensure_deployment_fits(deployment)
+    deploy(deployment)
+  end
+
+  def randomly_deploy_ship(ship)
+    # TODO: expand grid
+    point = Point.from([rand(5), rand(5)])
+    direction = (rand(2) == 1 ? :horizontal : :vertical)
+    deploy_ship(ship, point, direction)
+  end
 end

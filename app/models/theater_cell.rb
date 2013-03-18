@@ -16,15 +16,23 @@ class TheaterCell
   end
 
   def name
-    "hello"
+    "A: #{deployments.first.class.inspect}"
+  end
+
+  def attack
+    deployment_of_type(Attack)
   end
 
   def attacked?
-    false
+    attack.present?
+  end
+
+  def ship_deployment
+    deployment_of_type(ShipDeployment)
   end
 
   def ship
-    deployments.first.try(:ship)
+    ship_deployment.try(:ship)
   end
 
   def has_ship?
@@ -37,5 +45,13 @@ class TheaterCell
 
   def icon
     ship ? ship.name.first : "?"
+  end
+
+  private
+
+  def deployment_of_type(type)
+    deployments.select do |deployment|
+      deployment.is_a?(type)
+    end.first
   end
 end
