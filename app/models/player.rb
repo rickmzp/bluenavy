@@ -26,7 +26,23 @@ class Player
   after_initialize :build_navy_if_nil
 
   def has_turn?
-    game.player_with_current_turn == self
+    game.has_turn?(self)
+  end
+
+  def attack(point)
+    game.attack_by(self, target: point)
+  end
+
+  def offensive
+    Theater.with_deployments(my_attacks)
+  end
+
+  def my_attacks
+    game.attacks_by(self)
+  end
+
+  def to_sym
+    player_in_game
   end
 
   private

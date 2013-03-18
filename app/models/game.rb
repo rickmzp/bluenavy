@@ -44,9 +44,11 @@ class Game
   validates :current_turn,
     inclusion: { in: [:player_1, :player_2] }
 
-  def player_with_current_turn
-    send(current_turn) if current_turn.present?
+  def player_with_turn
+    send(current_turn)
   end
+
+  alias_method :player_with_current_turn, :player_with_turn
 
   def player_sym(player)
     if player.present?
@@ -60,11 +62,25 @@ class Game
 
   def attack_by(player, options)
     raise OutOfTurn if not has_turn?(player)
-    attacks.create!({ player: player }.merge(options))
+    attack = attacks.create!({ player_sym: player_sym(player) }.merge(options))
+    change_turn
+    attack
+  end
+
+  def attacks_by(player)
+    attacks.where(player_sym: player_sym(player))
   end
 
   def has_turn?(player)
     player_with_current_turn == player
+  end
+
+  private
+
+  def change_turn
+    return update_attributes! current_turn: :player_2 if current_turn == :player_1
+    return update_attributes! current_turn: :player_1 if current_turn == :player_2
+    raise "unknown error"
   end
 
   class OutOfTurn < Exception

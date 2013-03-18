@@ -1,0 +1,8 @@
+= render_navy(player.navy)
+= render_theater(player.offensive)
+
+- if player.has_turn?
+  %p.ready_to_attack Ready to Attack
+  = new_attack_launcher
+- else
+  %p.waiting_for_attack Waiting for Opponent's Attack

@@ -9,5 +9,5 @@
       %tr
         %th= (65 + y).chr
         - 10.times do |x|
-          - ship = navy.ship_at([x, y])
-          %td= ship ? ship.name.first : nil
+          - cell = theater.at([x, y])
+          %td= cell ? cell.name.first : nil

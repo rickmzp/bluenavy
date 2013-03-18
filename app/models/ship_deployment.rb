@@ -1,5 +1,4 @@
-class ShipDeployment
-  include Mongoid::Document
+class ShipDeployment < Deployment
   extend Forwardable
 
   embedded_in :grid, inverse_of: :deployments

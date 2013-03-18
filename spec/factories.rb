@@ -4,7 +4,7 @@ FactoryGirl.define do
     player_1 { build(:player) }
 
     trait :in_progress do
-
+      player_2 { build(:player) }
     end
   end
 

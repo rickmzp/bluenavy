@@ -1,10 +1,5 @@
 %p Welcome, #{current_player}!
 - if current_game.started?
-  = render_navy(current_player.navy)
-  - if current_player.has_turn?
-    %p.ready_to_attack Ready to Attack
-    = new_attack_launcher
-  - else
-    %p.waiting_for_attack Waiting for Opponent's Attack
+  = render "command_center", game: current_game, player: current_player
 - else
   %p.waiting_for_an_opponent Waiting for an opponent…
