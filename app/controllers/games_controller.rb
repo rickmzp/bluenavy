@@ -19,7 +19,6 @@ class GamesController < ApplicationController
 
   def join
     self.current_player = current_game.join(current_user)
-    current_game.start
     redirect_to current_game
   end
 

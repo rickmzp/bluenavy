@@ -19,8 +19,10 @@ class Game
   alias_method :creator, :player_1
 
   embeds_one :player_2, class_name: "Player"
-  validates :player_1,
-    presence: { if: :started? }
+
+  def started?
+    player_2.present?
+  end
 
   def player_named(name)
     case name
@@ -36,20 +38,9 @@ class Game
     player
   end
 
-  field :started, type: Boolean, default: false
-  validates :started,
-    inclusion: { in: [true, false] }
-
-  def start
-    raise "already started" if started?
-    self.current_turn = :player_1
-    update_attributes! started: true
-  end
-
-  field :current_turn, type: Symbol
+  field :current_turn, type: Symbol, default: :player_1
   validates :current_turn,
-    inclusion: { in: [:player_1, :player_2], allow_nil: true },
-    presence: { if: :started? }
+    inclusion: { in: [:player_1, :player_2] }
 
   def player_with_current_turn
     send(current_turn) if current_turn.present?

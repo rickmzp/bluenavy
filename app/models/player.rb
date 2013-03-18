@@ -7,7 +7,8 @@ class Player
     player
   end
 
-  embedded_in :game
+  embedded_in :game, inverse_of: :player_1
+  embedded_in :game, inverse_of: :player_2
 
   field :user, type: User
   validates :user,
