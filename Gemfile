@@ -20,10 +20,9 @@ end
 
 group :test do
   gem "capybara"
-  gem "cucumber-rails"
+  gem "cucumber-rails", require: false
   gem "database_cleaner"
   gem "ffaker"
-  gem "minitest-rails"
-  gem "minitest-matchers"
+  gem "rspec-rails"
   gem "factory_girl"
 end
