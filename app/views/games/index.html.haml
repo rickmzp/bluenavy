@@ -1,14 +1,6 @@
 %h2 New Game
 
-= form_for @new_game, url: games_path, method: :post do |f|
-  = f.error_messages
-
-  %ul
-    %li.player_1
-      = f.label :player_1, "Name"
-      = f.text_field :player_1
-    %li.actions
-      = f.submit "Create Game"
+= button_to "Create Game", games_path
 
 %h2 Join Game
 
@@ -22,12 +14,4 @@
       %tr{id: "game_#{game.id}"}
         %td= game.player_1
         %td
-          = form_for game, url: join_game_path(id: game.id), method: :post do |f|
-            = f.error_messages
-
-            %ul
-              %li.player_1
-                = f.label :player_2, "Name"
-                = f.text_field :player_2
-              %li.actions
-                = f.submit "Join Game"
+          = button_to "Join Game", join_game_path(id: game.id)

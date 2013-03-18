@@ -15,10 +15,7 @@ Before do
 end
 
 When(/^I create a game$/) do
-  within "#new_game" do
-    fill_in "Name", with: @my_name
-    click_button "Create Game"
-  end
+  click_button "Create Game"
   @game = Game.last
 end
 
@@ -33,8 +30,7 @@ end
 When(/^I join the game$/) do
   visit root_path
   within "#game_#{@game.id}" do
-    fill_in "Name", with: @my_name
-    click_button "Join"
+    click_button "Join Game"
   end
 end
 
