@@ -10,13 +10,11 @@ class NavalStrategy
         strategy.randomly_deploy_ship ships_to_deploy.last
         ships_to_deploy.pop
       rescue InvalidDeployment
+        # do nothing, allow script to try again
       end
     end until ships_to_deploy.empty?
 
     strategy
-  end
-
-  class InvalidDeployment < Exception
   end
 
   def initialize(deployments = [])
@@ -32,6 +30,8 @@ class NavalStrategy
 
   def deploy_ship(ship, start_point, direction)
     deployment = ShipDeployment.new(ship, Point.from(start_point), direction)
+    ensure_deployment_fits(deployment)
+    place_on_grid(deployment)
     deployments << deployment
     deployment
   end
@@ -51,6 +51,14 @@ class NavalStrategy
   end
 
   private
+
+  def ensure_deployment_fits(deployment)
+    deployment.vectors.each do |point|
+      if ship = ship_at(point)
+        raise ShipConflict.new(ship, point)
+      end
+    end
+  end
 
   def place_deployments_on_grid
     deployments.each do |deployment|
@@ -76,5 +84,19 @@ class NavalStrategy
 
   def rows_count
     10
+  end
+
+  class InvalidDeployment < Exception
+  end
+
+  class ShipConflict < InvalidDeployment
+    def initialize(ship, conflict)
+      @ship = ship
+      @conflict = conflict
+    end
+
+    attr_reader :ship
+
+    attr_reader :conflict
   end
 end
