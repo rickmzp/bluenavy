@@ -1,5 +1,6 @@
 class Theater
   include Mongoid::Document
+  include GridSupport
 
   class << self
     alias_method :with_deployments, :new
@@ -15,6 +16,14 @@ class Theater
   embedded_in :navy, inverse_of: :strategy
 
   embeds_many :deployments, class_name: "ShipDeployment"
+
+  def height
+    rows.count
+  end
+
+  def width
+    columns.count
+  end
 
   def deploy_ship(ship, start_point, direction)
     deployment = ShipDeployment.new(ship, Point.from(start_point), direction)
@@ -33,8 +42,7 @@ class Theater
   end
 
   def at(point)
-    point = Point.from(point)
-    x, y = point.to_a
+    x, y = Point.from(point).to_a
     grid[x][y]
   end
 
@@ -42,9 +50,8 @@ class Theater
 
   def ensure_deployment_fits(deployment)
     deployment.vectors.each do |point|
-      if ship = ship_at(point)
-        raise ShipConflict.new(ship, point)
-      end
+      cell = at(point)
+      raise ShipConflict.new(cell) if cell.has_ship?
     end
   end
 
@@ -57,13 +64,16 @@ class Theater
   def place_on_grid(deployment)
     deployment.vectors.each do |point|
       x, y = point.to_a
-      Rails.logger.info [x, y]
-      grid[x][y] = deployment
+      grid[x][y].deploy(deployment)
     end
   end
 
   def grid
-    @grid ||= Array.new(columns_count) { Array.new(rows_count) }
+    @grid ||= Array.new(columns_count) do |x|
+      Array.new(rows_count) do |y|
+        TheaterCell.new(Point.at(x, y), self)
+      end
+    end
   end
 
   def columns_count
@@ -78,13 +88,10 @@ class Theater
   end
 
   class ShipConflict < InvalidDeployment
-    def initialize(ship, conflict)
-      @ship = ship
-      @conflict = conflict
+    def initialize(cell)
+      @cell = cell
     end
 
-    attr_reader :ship
-
-    attr_reader :conflict
+    attr_reader :cell
   end
 end

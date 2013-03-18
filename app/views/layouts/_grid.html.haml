@@ -2,12 +2,11 @@
   %thead
     %tr
       %td &nbsp;
-      - 10.times do |x|
-        %th= x + 1
+      - theater.columns.each do |column|
+        %th= column
   %tbody
-    - 10.times do |y|
+    - theater.rows.each_with_index do |row, y|
       %tr
-        %th= (65 + y).chr
-        - 10.times do |x|
-          - cell = theater.at([x, y])
-          %td= cell ? cell.name.first : nil
+        %th= row
+        - theater.columns.each_with_index do |column, x|
+          = render_point(theater.at([x, y]))

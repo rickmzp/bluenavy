@@ -10,7 +10,7 @@ describe Game do
 
   describe ".attack_by" do
     let(:attacker) { player_1 }
-    let(:target) { Point.at(:A1) }
+    let(:target) { Point.from(:A1) }
     subject { game.attack_by(attacker, target: target) }
 
     it { is_expected.to change(game, :player_with_turn).to(player_2) }

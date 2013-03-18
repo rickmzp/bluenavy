@@ -25,4 +25,9 @@ FactoryGirl.define do
   factory :navy do
   end
 
+  factory :ship do
+    name { Faker::Company.name }
+    size { rand(3) + 1 }
+  end
+
 end

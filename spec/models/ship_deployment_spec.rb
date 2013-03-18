@@ -1,7 +1,8 @@
 require "spec_helper"
 
 describe ShipDeployment do
-  let(:ship) { double(size: 2) }
+  let(:ship) { build(:ship, size: size) }
+  let(:size) { 2 }
   let(:start_point) { :A1 }
   let(:direction) { :horizontal }
   let(:deployment) { ShipDeployment.new(ship, start_point, direction) }
@@ -10,7 +11,7 @@ describe ShipDeployment do
     subject { deployment.vectors }
 
     context "ship" do
-      let(:ship) { double(size: 1) }
+      let(:size) { 1 }
       it { should eq([[0, 0]]) }
     end
 
