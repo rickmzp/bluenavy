@@ -21,15 +21,25 @@ class Player < Struct.new(:name, :game)
 
   after_initialize :build_navy_if_nil
 
-  field :ready_to_attack, type: Boolean, default: false
-  validates :ready_to_attack,
-    inclusion: [true, false]
-
   def ready!
-    update_attributes! ready_to_attack: true
+    game.ready!(self)
+  end
+
+  def ready_to_attack?
+    game.player_with_current_turn == self
+  end
+
+  def waiting_for_opponent?
+    !ready_to_attack?
   end
 
   private
+
+  def player_in_game
+    return :player_1 if game.player_1 == self
+    return :player_2 if game.player_2 == self
+    raise "Unknown player"
+  end
 
   def build_navy_if_nil
     build_navy if navy.nil?

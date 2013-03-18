@@ -41,4 +41,38 @@ class Game
   def start
     update_attributes! started: true
   end
+
+  field :current_turn, type: Symbol
+  validates :current_turn,
+    inclusion: { in: [:player_1, :player_2], allow_nil: true },
+    presence: { if: :started? }
+
+  def player_with_current_turn
+    send(current_turn) if current_turn.present?
+  end
+
+  field :ready, type: Array, default: []
+
+  def ready!(player)
+    sym = player_sym(player)
+    ready << sym
+    self.current_turn ||= sym
+    save!
+    start if ready?
+    ready
+  end
+
+  def ready?
+    ready.length == 2
+  end
+
+  private
+
+  def player_sym(player)
+    if player.present?
+      return :player_1 if player_1 == player
+      return :player_2 if player_2 == player
+    end
+    raise "unknown player: #{player}"
+  end
 end

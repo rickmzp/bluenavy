@@ -11,3 +11,5 @@
     %p= button_to "Begin Attack", ready_to_play_game_path
   - if current_player.ready_to_attack?
     %p Ready to Attack
+  - if current_player.waiting_for_opponent?
+    %p Waiting for Opponent's Attack

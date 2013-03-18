@@ -35,6 +35,7 @@ end
 
 Given(/^the game I'm in has begun$/) do
   @game = create(:game)
+  @enemy = @game.player_1
   step "I join the game"
 end
 
@@ -51,9 +52,9 @@ Then(/^I get to attack first$/) do
 end
 
 Given(/^the enemy has deployed their navy$/) do
-  pending # express the regexp above with the code you wish you had
+  @enemy.navy.deploy
 end
 
 Then(/^the enemy gets to attack first$/) do
-  pending # express the regexp above with the code you wish you had
+  page.should have_content "Waiting for Opponent's Attack"
 end

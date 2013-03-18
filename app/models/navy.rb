@@ -2,8 +2,12 @@ class Navy
   include Mongoid::Document
   embedded_in :player
 
-  def deploy(strategy)
-    self.strategy = true
+  def deploy(strategy = nil)
+    if strategy.nil?
+      self.strategy = NavalStrategy.generate_for(self)
+    else
+      self.strategy = true
+    end
   end
 
   attr_reader :strategy

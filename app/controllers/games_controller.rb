@@ -20,7 +20,6 @@ class GamesController < ApplicationController
   def join
     sign_in_player(params[:game][:player_2])
     current_game.join(current_player)
-    current_game.start
     redirect_to current_game
   end
 
