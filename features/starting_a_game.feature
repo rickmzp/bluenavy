@@ -10,14 +10,14 @@ Feature: Starting a game
     Then the game begins
 
   Scenario: Player places their ships
-    Given the game has begun
+    Given the game I'm in has begun
     When I deploy my navy
     And declare I am ready for war
     Then I get to attack first
 
   # TODO: very low-risk test, worth pushing down
   Scenario: The enemy placed thier ships before player
-    Given the game has begun
+    Given the game I'm in has begun
     And the enemy has deployed their navy
     When I deploy my navy
     And declare I am ready for war

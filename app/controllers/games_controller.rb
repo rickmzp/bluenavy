@@ -5,7 +5,7 @@ class GamesController < ApplicationController
   end
 
   def create
-    self.current_player = params[:game][:player_1]
+    sign_in_player(params[:game][:player_1])
     game = Game.create_for_player(current_player)
     redirect_to game_path(id: game.id)
   rescue Mongoid::Errors::Validations => error
@@ -18,36 +18,24 @@ class GamesController < ApplicationController
   end
 
   def join
-    self.current_player = params[:game][:player_2]
+    sign_in_player(params[:game][:player_2])
     current_game.join(current_player)
     current_game.start
     redirect_to current_game
   end
 
-  protected
-
-  helper_method :current_player
-  def current_player
-    raise "current_player not set" unless session.has_key?(:current_player)
-    session[:current_player]
+  def ready_to_play
+    current_player.ready!
+    redirect_to current_game
   end
 
-  def current_player=(player)
-    raise "current_player cannot be blank" if player.blank?
-    session[:current_player] = player
+  def url_options
+    current_game.present? ? super.merge(game_id: current_game) : super
   end
 
-  helper_method :current_game
-  def current_game
-    @game = Game.find(params[:id])
-  end
+  private
 
-  helper_method :opponent
-  def opponent
-    if current_player == current_game.player_1
-      current_game.player_2
-    else
-      current_game.player_1
-    end
+  def sign_in_player(name)
+    self.current_player = Player.named(name)
   end
 end

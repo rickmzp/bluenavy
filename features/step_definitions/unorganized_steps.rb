@@ -33,20 +33,21 @@ Then(/^the game begins$/) do
   page.must have_content("Welcome, #{@my_name}! The game with #{@game.player_1} is now beginning…")
 end
 
-Given(/^the game has begun$/) do
-  pending # express the regexp above with the code you wish you had
+Given(/^the game I'm in has begun$/) do
+  @game = create(:game)
+  step "I join the game"
 end
 
 When(/^I deploy my navy$/) do
-  pending # express the regexp above with the code you wish you had
+  click_button "Auto-deploy"
 end
 
 When(/^declare I am ready for war$/) do
-  pending # express the regexp above with the code you wish you had
+  click_button "Begin Attack"
 end
 
 Then(/^I get to attack first$/) do
-  pending # express the regexp above with the code you wish you had
+  page.must have_content "Ready to Attack"
 end
 
 Given(/^the enemy has deployed their navy$/) do

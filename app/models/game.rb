@@ -12,13 +12,21 @@ class Game
     alias_method :create, :create!
   end
 
-  field :player_1, type: String
+  embeds_one :player_1, class_name: "Player"
   validates :player_1,
     presence: true
 
-  field :player_2, type: String
+  embeds_one :player_2, class_name: "Player"
   validates :player_1,
     presence: { if: :started? }
+
+  def player_named(name)
+    case name
+    when player_1.try(:name) then player_1
+    when player_2.try(:name) then player_2
+    else raise "No player named: #{name}"
+    end
+  end
 
   def join(player)
     self.player_2 = player
