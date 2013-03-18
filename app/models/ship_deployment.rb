@@ -1,7 +1,7 @@
 class ShipDeployment
   def initialize(ship, start_point, direction)
     @ship = ship
-    @start_point = Point.new(start_point)
+    @start_point = Point.from(start_point)
     @direction = direction
   end
 

@@ -13,7 +13,7 @@ When(/^I create a game$/) do
 end
 
 Then(/^I start waiting for an opponent to join$/) do
-  page.must have_content("Welcome, #{@my_name}! Waiting for an opponent…")
+  page.should have_content("Welcome, #{@my_name}! Waiting for an opponent…")
 end
 
 Given(/^a player has created a game$/) do
@@ -30,7 +30,7 @@ When(/^I join the game$/) do
 end
 
 Then(/^the game begins$/) do
-  page.must have_content("Welcome, #{@my_name}! The game with #{@game.player_1} is now beginning…")
+  page.should have_content("Welcome, #{@my_name}! The game with #{@game.player_1} is now beginning…")
 end
 
 Given(/^the game I'm in has begun$/) do
@@ -47,7 +47,7 @@ When(/^declare I am ready for war$/) do
 end
 
 Then(/^I get to attack first$/) do
-  page.must have_content "Ready to Attack"
+  page.should have_content "Ready to Attack"
 end
 
 Given(/^the enemy has deployed their navy$/) do

@@ -12,14 +12,17 @@ class NavalStrategy
   end
 
   def ship_at(point)
-    grid(point_to_grid_index_path(point))
+    point = Point.from(point)
+    x, y = point.to_a
+    grid[x][y]
   end
 
   private
 
   def place_on_grid(deployment)
-    deployment.vectors.each do |x, y|
-      grid[x][y]
+    deployment.vectors.each do |point|
+      x, y = point.to_a
+      grid[x][y] = deployment
     end
   end
 
@@ -27,7 +30,7 @@ class NavalStrategy
     @grid ||= Array.new(columns_count) { Array.new(rows_count) }
   end
 
-  def rows_count
+  def columns_count
     10
   end
 

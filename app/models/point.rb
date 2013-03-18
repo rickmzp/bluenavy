@@ -1,4 +1,12 @@
 class Point
+
+  # TODO: reorganize .from and #initialize
+
+  def self.from(target)
+    return target.to_point if target.respond_to?(:to_point)
+    new(target)
+  end
+
   def initialize(symbol_or_vector)
     if symbol_or_vector.respond_to?(:to_sym)
       @symbol = symbol_or_vector
@@ -44,6 +52,10 @@ class Point
     Point.new([x, y + offset])
   end
 
+  def to_point
+    self
+  end
+
   protected
 
   def symbol_to_vector(symbol)
@@ -83,4 +95,5 @@ class Point
   def column_to_index(number)
     number - 1
   end
+
 end
