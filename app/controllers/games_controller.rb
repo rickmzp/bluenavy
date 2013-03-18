@@ -6,7 +6,7 @@ class GamesController < ApplicationController
 
   def create
     game = Game.create_for_user(current_user)
-    self.current_player = game.creator
+    self.current_player = :player_1
     redirect_to game_path(id: game.id)
   rescue Mongoid::Errors::Validations => error
     @new_game = error.document
@@ -14,11 +14,13 @@ class GamesController < ApplicationController
   end
 
   def show
-    #
+    Rails.logger.info "deploy"
+    current_player.navy.deploy
   end
 
   def join
-    self.current_player = current_game.join(current_user)
+    current_game.join(current_user)
+    self.current_player = :player_2
     redirect_to current_game
   end
 

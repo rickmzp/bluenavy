@@ -3,6 +3,7 @@ ruby "1.9.3"
 
 gem "dynamic_form", "~> 1.1.4"
 gem "haml-rails", "~> 0.4.0"
+gem "ice_nine", "~> 0.7.0"
 gem "jbuilder", "~> 1.0.2"
 gem "jquery-rails", "~> 2.2.1"
 gem "mongoid", "~> 3.1.2"

@@ -9,10 +9,11 @@ class Point
 
   def initialize(symbol_or_vector)
     if symbol_or_vector.respond_to?(:to_sym)
-      @symbol = symbol_or_vector
+      @symbol = symbol_or_vector.to_sym
       @vector = symbol_to_vector(@symbol)
     elsif symbol_or_vector.respond_to?(:to_a)
-      @vector = symbol_or_vector
+      @vector = symbol_or_vector.to_a
+      Rails.logger.info "start: #{@vector.inspect}"
       @symbol = vector_to_symbol(@vector)
     else
       message = "Need a symbol (responds to #to_sym) or a vector (responds to #to_a)"
@@ -54,6 +55,16 @@ class Point
 
   def to_point
     self
+  end
+
+  def mongoize
+    Rails.logger.info "mongoize: #{x}, #{y}"
+    [x, y]
+  end
+
+  def self.demongoize(array)
+    Rails.logger.info "demongoize: #{array}"
+    Point.new(array)
   end
 
   protected

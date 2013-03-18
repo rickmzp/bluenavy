@@ -5,6 +5,7 @@ class Game
     def create_for_user(user)
       game = new
       game.player_1 = Player.from_user(user)
+      game.player_1.navy.deploy
       game.save!
       game
     end
@@ -34,8 +35,9 @@ class Game
 
   def join(user)
     player = Player.from_user(user)
+    player.navy.deploy
     update_attributes! player_2: player
-    player
+    player_2
   end
 
   field :current_turn, type: Symbol, default: :player_1
@@ -45,8 +47,6 @@ class Game
   def player_with_current_turn
     send(current_turn) if current_turn.present?
   end
-
-  private
 
   def player_sym(player)
     if player.present?

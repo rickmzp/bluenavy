@@ -1,5 +1,6 @@
 %p Welcome, #{current_player}!
 - if current_game.started?
+  = render_navy(current_player.navy)
   - if current_player.has_turn?
     %p.ready_to_attack Ready to Attack
   - else

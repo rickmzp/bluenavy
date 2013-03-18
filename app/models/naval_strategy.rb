@@ -1,4 +1,6 @@
 class NavalStrategy
+  include Mongoid::Document
+
   def self.generate_for(navy)
     strategy = new
     ships_to_deploy = navy.ships.dup
@@ -17,20 +19,28 @@ class NavalStrategy
   class InvalidDeployment < Exception
   end
 
-  def deployments
-    @deplyoments ||= []
+  def initialize(deployments = [])
+    super()
+    self.deployments = deployments
   end
+
+  after_initialize :place_deployments_on_grid
+
+  embedded_in :navy, inverse_of: :strategy
+
+  embeds_many :deployments, class_name: "ShipDeployment"
 
   def deploy_ship(ship, start_point, direction)
     deployment = ShipDeployment.new(ship, Point.from(start_point), direction)
     deployments << deployment
-    place_on_grid(deployment)
     deployment
   end
 
   def randomly_deploy_ship(ship)
-    point = Point.from([rand(9), rand(9)])
-    direction = (rand(1) == 1 ? :horizontal : :vertical)
+    Rails.logger.info "random"
+    # TODO: expand grid
+    point = Point.from([rand(5), rand(5)])
+    direction = (rand(2) == 1 ? :horizontal : :vertical)
     deploy_ship(ship, point, direction)
   end
 
@@ -42,9 +52,16 @@ class NavalStrategy
 
   private
 
+  def place_deployments_on_grid
+    deployments.each do |deployment|
+      place_on_grid(deployment)
+    end
+  end
+
   def place_on_grid(deployment)
     deployment.vectors.each do |point|
       x, y = point.to_a
+      Rails.logger.info [x, y]
       grid[x][y] = deployment
     end
   end

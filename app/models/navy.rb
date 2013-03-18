@@ -10,7 +10,15 @@ class Navy
     end
   end
 
-  attr_reader :strategy
+  def ship_at(*args)
+    strategy.ship_at(*args)
+  end
+
+  def grid
+    strategy.grid
+  end
+
+  embeds_one :strategy, class_name: "NavalStrategy"
 
   def deployed?
     strategy.present?
@@ -25,8 +33,4 @@ class Navy
       Ship.named("Patrol Boat", 2)
     ]
   end
-
-  private
-
-  attr_writer :strategy
 end

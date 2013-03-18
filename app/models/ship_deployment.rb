@@ -1,18 +1,32 @@
 class ShipDeployment
+  include Mongoid::Document
+  extend Forwardable
+
+  embedded_in :grid, inverse_of: :deployments
+
   def initialize(ship, start_point, direction)
-    @ship = ship
-    @start_point = Point.from(start_point)
-    @direction = direction
+    super()
+    self.ship = ship
+    self.start_point = Point.from(start_point)
+    self.direction = direction
   end
 
-  attr_reader :ship
+  embeds_one :ship
+  validates :ship,
+    presence: true
 
-  attr_reader :start_point
+  def_delegator :ship, :name
 
-  attr_reader :direction
+  field :start_point, type: Point
+  validates :start_point,
+    presence: true
+
+  field :direction, type: Symbol
+  validates :direction,
+    inclusion: { in: [:horizontal, :vertical] }
 
   def vectors
-    to_change = (direction == :horizontal ? :x : :y)
+    to_change =
       case direction
       when :horizontal then :x
       when :vertical then :y
