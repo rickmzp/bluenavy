@@ -30,17 +30,26 @@ class Player
   end
 
   def attack(point)
-    attack = game.attack_by(self, target: point)
-    offensive.deploy(attack)
-    game.save!
-    attack
+    game.attack_by(self, target: point)
   end
 
   def offensive
-    Theater.with_deployments(my_attacks)
+    Theater.with_deployments(attacks)
   end
 
-  def my_attacks
+  def defensive
+    Theater.with_deployments(ship_deployments + opponent.attacks)
+  end
+
+  def ship_deployments
+    navy.strategy.deployments
+  end
+
+  def opponent
+    game.opponent_to(self)
+  end
+
+  def attacks
     game.attacks_by(self)
   end
 

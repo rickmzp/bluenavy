@@ -63,6 +63,9 @@ class Game
   def attack_by(player, options)
     raise OutOfTurn if not has_turn?(player)
     attack = attacks.create!({ player_sym: player_sym(player) }.merge(options))
+    player.offensive.deploy(attack)
+    player.opponent.defensive.deploy(attack)
+    save!
     change_turn
     attack
   end
@@ -77,6 +80,12 @@ class Game
 
   def has_turn?(player)
     player_with_current_turn == player
+  end
+
+  def opponent_to(player)
+    return player_2 if player == player_1
+    return player_1 if player == player_2
+    raise "unknown error"
   end
 
   private

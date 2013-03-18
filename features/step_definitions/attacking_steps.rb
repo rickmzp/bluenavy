@@ -28,3 +28,19 @@ end
 Then(/^it must be my turn to attack$/) do
   page.should have_css(".ready_to_attack")
 end
+
+Given(/^it is the enemy's turn to attack in a game$/) do
+  step "it is my turn to attack in a game"
+  step "I fire a missile at a grid point"
+end
+
+When(/^the enemy fires a missile at a grid point occupied by my navy$/) do
+  my_ships_point = current_player.ship_deployments.first.vectors.first
+  @attack = current_player.opponent.attack(my_ships_point)
+end
+
+Then(/^I receive a report of their attack's success$/) do
+  reload_page
+  page.should have_css("#attack_#{@attack.id}.completed")
+  page.should have_css("#defensive_theater .#{@attack.target.to_sym.to_s.downcase}.attacked")
+end

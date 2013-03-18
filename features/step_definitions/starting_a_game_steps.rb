@@ -5,6 +5,16 @@ module AuthenticationHelpers
     fill_in "Name", with: name
     click_button "Sign In"
   end
+
+  def current_player
+    player = find("body")["data-current-player"]
+    return if player.nil?
+    @game.send(player)
+  end
+
+  def reload_page
+    visit current_path
+  end
 end
 
 World(AuthenticationHelpers)

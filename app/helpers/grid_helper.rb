@@ -6,7 +6,7 @@ module GridHelper
 
     capture_haml do
       haml_tag :td, class: dom_classes do
-        haml_concat cell.name
+        haml_concat cell.icon
       end
     end
   end

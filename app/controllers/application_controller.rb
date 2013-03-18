@@ -12,8 +12,8 @@ class ApplicationController < ActionController::Base
 
   helper_method :current_player
   def current_player
-    raise "current_player not set" unless session.has_key?(:current_player)
-    current_game.send(session[:current_player])
+    return if not session.has_key?(:current_player)
+    current_game.try(:send, session[:current_player])
   end
 
   def current_player=(player)

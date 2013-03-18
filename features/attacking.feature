@@ -11,10 +11,10 @@ Feature: Attacking
     Given it is the enemy's turn to attack in a game
     When the enemy fires a missile at a grid point occupied by my navy
     Then I receive a report of their attack's success
-    And it is my turn to attack
+    And it must be my turn to attack
 
   Scenario: Player is missed by the enemy's attack
     Given it is the enemy's turn to attack in a game
     When the enemy fires a missile at an empty grid point
     Then I receive a report of their attack's failure
-    And it is my turn to attack
+    And it must be my turn to attack
