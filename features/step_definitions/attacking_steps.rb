@@ -10,6 +10,7 @@ When(/^I fire a missile at a grid point$/) do
     fill_in "Target", with: @grid_point
     click_button "Launch"
   end
+  @attack = @game.reload.latest_attack
 end
 
 Then(/^a missle explodes at that grid point$/) do
@@ -17,11 +18,11 @@ Then(/^a missle explodes at that grid point$/) do
 end
 
 Then(/^I receive a report on the attack's result$/) do
-  pending # express the regexp above with the code you wish you had
+  page.should have_css("#attack_#{@attack.id}.completed")
 end
 
 Then(/^it is the enemy's turn to attack$/) do
-  pending # express the regexp above with the code you wish you had
+  page.should have_css("#current_turn.player_2")
 end
 
 Then(/^it must be my turn to attack$/) do

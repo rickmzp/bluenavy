@@ -49,5 +49,10 @@ describe Game do
         it { should eq([p2_attack]) }
       end
     end
+
+    describe ".latest_attack" do
+      subject { game.latest_attack }
+      it { should eq(p2_attack) }
+    end
   end
 end

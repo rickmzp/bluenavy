@@ -1,0 +1,5 @@
+:ruby
+  dom_classes = []
+  dom_classes << "completed" if attack.completed?
+%p[attack]{class: dom_classes}
+  = debug attack.inspect

@@ -71,6 +71,10 @@ class Game
     attacks.where(player_sym: player_sym(player))
   end
 
+  def latest_attack
+    attacks.last
+  end
+
   def has_turn?(player)
     player_with_current_turn == player
   end

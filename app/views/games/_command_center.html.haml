@@ -8,3 +8,11 @@
   = new_attack_launcher
 - else
   %p.waiting_for_attack Waiting for Opponent's Attack
+
+- if attack = game.latest_attack
+  %h2 Latest Attack
+  = render attack
+
+%h2 Turn
+%p#current_turn.turn{class: game.current_turn}
+  = game.current_turn.to_s.titleize
