@@ -55,4 +55,18 @@ class Game
     end
     raise "unknown player: #{player}"
   end
+
+  embeds_many :attacks
+
+  def attack_by(player, options)
+    raise OutOfTurn if not has_turn?(player)
+    attacks.create!({ player: player }.merge(options))
+  end
+
+  def has_turn?(player)
+    player_with_current_turn == player
+  end
+
+  class OutOfTurn < Exception
+  end
 end

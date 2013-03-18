@@ -9,4 +9,6 @@ class Attack
 
   field :target, type: Point
   attr_accessible :target
+
+  alias_method :successful?, :persisted?
 end

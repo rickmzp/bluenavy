@@ -1,11 +1,14 @@
 class Point
 
   # TODO: reorganize .from and #initialize
+  class << self
+    def from(target)
+      return if target.blank?
+      return target.to_point if target.respond_to?(:to_point)
+      new(target)
+    end
 
-  def self.from(target)
-    return if target.blank?
-    return target.to_point if target.respond_to?(:to_point)
-    new(target)
+    alias_method :at, :from
   end
 
   def initialize(symbol_or_vector)

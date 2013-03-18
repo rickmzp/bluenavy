@@ -13,11 +13,6 @@ class GamesController < ApplicationController
     render action: :index
   end
 
-  def show
-    Rails.logger.info "deploy"
-    current_player.navy.deploy
-  end
-
   def join
     current_game.join(current_user)
     self.current_player = :player_2
