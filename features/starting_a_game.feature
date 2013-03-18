@@ -8,17 +8,4 @@ Feature: Starting a game
     Given a player has created a game
     When I join the game
     Then the game begins
-
-  Scenario: Player places their ships
-    Given the game I'm in has begun
-    When I deploy my navy
-    And declare I am ready for war
-    Then I get to attack first
-
-  # TODO: very low-risk test, worth pushing down
-  Scenario: The enemy placed thier ships before player
-    Given the game I'm in has begun
-    And the enemy has deployed their navy
-    When I deploy my navy
-    And declare I am ready for war
-    Then the enemy gets to attack first
+    And the enemy gets to attack first

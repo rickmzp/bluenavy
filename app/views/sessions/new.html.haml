@@ -1,0 +1,9 @@
+= form_for @user, url: session_path, method: :post do |f|
+  = f.error_messages
+
+  %ul
+    %li.field.name
+      = f.label :name
+      = f.text_field :name
+    %li.submit
+      = f.submit "Sign In"

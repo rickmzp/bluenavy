@@ -25,4 +25,5 @@ group :test do
   gem "ffaker"
   gem "rspec-rails"
   gem "factory_girl"
+  gem "launchy"
 end

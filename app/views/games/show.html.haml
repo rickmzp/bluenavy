@@ -1,15 +1,8 @@
-%p
-  Welcome, #{current_player}!
-  - if current_game.started?
-    The game with #{opponent} is now beginning…
-  - else
-    Waiting for an opponent…
-
+%p Welcome, #{current_player}!
 - if current_game.started?
-  %p= button_to "Auto-deploy", auto_deploy_navy_path
-  - if current_player.navy.deployed?
-    %p= button_to "Begin Attack", ready_to_play_game_path
-  - if current_player.ready_to_attack?
-    %p Ready to Attack
-  - if current_player.waiting_for_opponent?
-    %p Waiting for Opponent's Attack
+  - if current_player.has_turn?
+    %p.ready_to_attack Ready to Attack
+  - else
+    %p.waiting_for_attack Waiting for Opponent's Attack
+- else
+  %p.waiting_for_an_opponent Waiting for an opponent…

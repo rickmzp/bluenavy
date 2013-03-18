@@ -2,9 +2,9 @@ class Game
   include Mongoid::Document
 
   class << self
-    def create_for_player(player)
+    def create_for_user(user)
       game = new
-      game.player_1 = player
+      game.player_1 = Player.from_user(user)
       game.save!
       game
     end
@@ -15,6 +15,8 @@ class Game
   embeds_one :player_1, class_name: "Player"
   validates :player_1,
     presence: true
+
+  alias_method :creator, :player_1
 
   embeds_one :player_2, class_name: "Player"
   validates :player_1,
@@ -28,10 +30,10 @@ class Game
     end
   end
 
-  def join(player)
-    self.player_2 = player
-    save!
-    self
+  def join(user)
+    player = Player.from_user(user)
+    update_attributes! player_2: player
+    player
   end
 
   field :started, type: Boolean, default: false
@@ -39,6 +41,8 @@ class Game
     inclusion: { in: [true, false] }
 
   def start
+    raise "already started" if started?
+    self.current_turn = :player_1
     update_attributes! started: true
   end
 
@@ -49,21 +53,6 @@ class Game
 
   def player_with_current_turn
     send(current_turn) if current_turn.present?
-  end
-
-  field :ready, type: Array, default: []
-
-  def ready!(player)
-    sym = player_sym(player)
-    ready << sym
-    self.current_turn ||= sym
-    save!
-    start if ready?
-    ready
-  end
-
-  def ready?
-    ready.length == 2
   end
 
   private

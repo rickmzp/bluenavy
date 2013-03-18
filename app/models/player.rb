@@ -1,36 +1,31 @@
-class Player < Struct.new(:name, :game)
+class Player
   include Mongoid::Document
 
-  def self.named(name)
+  def self.from_user(user)
     player = new
-    player.name = name
+    player.user = user
     player
   end
 
   embedded_in :game
 
-  field :name, type: String
-  validates :name,
+  field :user, type: User
+  validates :user,
     presence: true
+
+  def name
+    user.name
+  end
 
   def to_s
     name
   end
 
   embeds_one :navy
-
   after_initialize :build_navy_if_nil
 
-  def ready!
-    game.ready!(self)
-  end
-
-  def ready_to_attack?
+  def has_turn?
     game.player_with_current_turn == self
-  end
-
-  def waiting_for_opponent?
-    !ready_to_attack?
   end
 
   private

@@ -5,8 +5,8 @@ class GamesController < ApplicationController
   end
 
   def create
-    sign_in_player(params[:game][:player_1])
-    game = Game.create_for_player(current_player)
+    game = Game.create_for_user(current_user)
+    self.current_player = game.creator
     redirect_to game_path(id: game.id)
   rescue Mongoid::Errors::Validations => error
     @new_game = error.document
@@ -18,8 +18,8 @@ class GamesController < ApplicationController
   end
 
   def join
-    sign_in_player(params[:game][:player_2])
-    current_game.join(current_player)
+    self.current_player = current_game.join(current_user)
+    current_game.start
     redirect_to current_game
   end
 
