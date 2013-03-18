@@ -13,4 +13,7 @@ FactoryGirl.define do
     name { Faker::Name.name }
   end
 
+  factory :navy do
+  end
+
 end
