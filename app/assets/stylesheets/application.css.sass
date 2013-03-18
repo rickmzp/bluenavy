@@ -1,0 +1,58 @@
+@import "compass/reset"
+@import "compass/utilities/general/clearfix"
+@import "compass/css3/text-shadow"
+
+body
+  :font-family "Helvetica Neue", "Helvetica", sans-serif
+
+#theaters
+  +clearfix
+  :background black
+  :margin 1em 0
+
+  .theater
+    :float left
+    :margin 5px
+  
+    table.grid
+      $cell-size: 30px
+      :border-spacing 5px
+      :border-collapse collapse
+      :border-left 1px solid #fff
+      :border-top 1px solid #fff
+      
+      th, td
+        :border-bottom 1px solid #fff
+        :border-right 1px solid #fff
+        :height $cell-size
+        :line-height $cell-size
+        :text-align center
+        :width $cell-size
+      
+      th
+        +text-shadow(black 0px 0px 2px)
+        :background #1B4146
+        :color #fff
+        :font-weight bold
+
+      thead td
+        :background black
+
+      tbody td
+        :background #89E7EF
+
+        &.occupied
+          :background #666
+
+        &.attacked.hit
+          :background #900
+
+        &.attacked.miss
+          :background #eee
+        
+
+  h3
+    :color white
+    :font-weight bold
+    :margin-bottom 5px
+

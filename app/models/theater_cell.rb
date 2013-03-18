@@ -44,7 +44,7 @@ class TheaterCell
   end
 
   def icon
-    ship ? ship.name.first : "?"
+    ship ? ship.name.first : ""
   end
 
   private

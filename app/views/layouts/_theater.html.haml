@@ -1,0 +1,14 @@
+.theater{id: "#{type}_theater"}
+  %h3= type == :defensive ? "You" : "Enemy"
+  %table.grid
+    %thead
+      %tr
+        %td &nbsp;
+        - theater.columns.each do |column|
+          %th= column
+    %tbody
+      - theater.rows.each_with_index do |row, y|
+        %tr
+          %th= row
+          - theater.columns.each_with_index do |column, x|
+            = render_theater_cell(theater.at([x, y]))

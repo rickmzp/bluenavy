@@ -10,6 +10,7 @@ FactoryGirl.define do
 
   factory :player do
     user { User.named(Faker::Name.name) }
+    navy { build(:navy) }
   end
 
   factory :user do
@@ -23,6 +24,7 @@ FactoryGirl.define do
   end
 
   factory :navy do
+    strategy { NavalStrategy.generate_for(self) }
   end
 
   factory :ship do
