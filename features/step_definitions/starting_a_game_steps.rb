@@ -19,6 +19,7 @@ When(/^I create a game$/) do
     fill_in "Name", with: @my_name
     click_button "Create Game"
   end
+  @game = Game.last
 end
 
 Then(/^I start waiting for an opponent to join$/) do
@@ -58,7 +59,7 @@ When(/^declare I am ready for war$/) do
 end
 
 Then(/^I get to attack first$/) do
-  page.should have_css(".ready_to_attack")
+  step "it must be my turn to attack"
 end
 
 Given(/^the enemy has deployed their navy$/) do
@@ -67,4 +68,9 @@ end
 
 Then(/^the enemy gets to attack first$/) do
   page.should have_content "Waiting for Opponent's Attack"
+end
+
+Given(/^an opponent joins the game$/) do
+  @game.join(build(:user))
+  visit game_url(@game)
 end

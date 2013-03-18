@@ -5,6 +5,11 @@ class ApplicationController < ActionController::Base
 
   protected
 
+  helper_method :current_navy
+  def current_navy
+    current_player.navy
+  end
+
   helper_method :current_player
   def current_player
     raise "current_player not set" unless session.has_key?(:current_player)
@@ -18,8 +23,8 @@ class ApplicationController < ActionController::Base
 
   helper_method :current_game
   def current_game
-    return unless params.has_key?(:id)
-    @game = Game.find(params[:id])
+    return unless params.has_key?(:game_id) || params.has_key?(:id)
+    @game = Game.find(params[:game_id] || params[:id])
   end
 
   helper_method :opponent

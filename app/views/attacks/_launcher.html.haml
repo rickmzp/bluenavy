@@ -1,0 +1,7 @@
+= form_for attack, url: navy_attacks_url, method: :post do |f|
+  %ul
+    %li.target
+      = f.label :target
+      = f.text_field :target, name: :target
+    %li.submit
+      = f.submit "Launch"

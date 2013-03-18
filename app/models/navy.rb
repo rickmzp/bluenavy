@@ -33,4 +33,12 @@ class Navy
       Ship.named("Patrol Boat", 2)
     ]
   end
+
+  embeds_many :attacks
+
+  def attack(point)
+    attack = Attack.launch_on(point)
+    attacks << attack
+    attack
+  end
 end

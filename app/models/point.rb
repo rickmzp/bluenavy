@@ -3,6 +3,7 @@ class Point
   # TODO: reorganize .from and #initialize
 
   def self.from(target)
+    return if target.blank?
     return target.to_point if target.respond_to?(:to_point)
     new(target)
   end
@@ -58,13 +59,12 @@ class Point
   end
 
   def mongoize
-    Rails.logger.info "mongoize: #{x}, #{y}"
+    return if x.blank? && y.blank?
     [x, y]
   end
 
   def self.demongoize(array)
-    Rails.logger.info "demongoize: #{array}"
-    Point.new(array)
+    Point.from(array)
   end
 
   protected

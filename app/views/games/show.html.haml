@@ -3,6 +3,7 @@
   = render_navy(current_player.navy)
   - if current_player.has_turn?
     %p.ready_to_attack Ready to Attack
+    = new_attack_launcher
   - else
     %p.waiting_for_attack Waiting for Opponent's Attack
 - else

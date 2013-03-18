@@ -9,6 +9,7 @@ BlueNavy::Application.routes.draw do
   scope "games/:game_id" do
     resource :navy, only: [] do
       post :auto_deploy, on: :collection
+      resource :attacks
     end
   end
 
