@@ -3,11 +3,11 @@
     %tr
       %td &nbsp;
       - 10.times do |x|
-        %td= x + 1
+        %th= x + 1
   %tbody
     - 10.times do |y|
       %tr
-        %td= (65 + y).chr
+        %th= (65 + y).chr
         - 10.times do |x|
           - ship = navy.ship_at([x, y])
           %td= ship ? ship.name.first : nil
