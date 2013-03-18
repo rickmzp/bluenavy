@@ -4,9 +4,9 @@ Feature: Starting a game
     When I create a game
     Then I start waiting for an opponent to join
 
-  Scenario: Opponent joins game
-    Given I have created a game
-    When an opponent joins the game
+  Scenario: Player joins a game
+    Given a player has created a game
+    When I join the game
     Then the game begins
 
   Scenario: Player places their ships

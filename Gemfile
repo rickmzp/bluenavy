@@ -25,4 +25,5 @@ group :test do
   gem "ffaker"
   gem "minitest-rails"
   gem "minitest-matchers"
+  gem "factory_girl"
 end
