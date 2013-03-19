@@ -1,5 +1,10 @@
-.theater{id: "#{type}_theater"}
-  %h3= type == :defensive ? "You" : "Enemy"
+:ruby
+  offensive = (type == :offensive)
+  dom_classes = []
+  dom_classes << :can_attack if player.has_turn?
+
+.theater{id: "#{type}_theater", class: dom_classes}
+  %h3= offensive ? "You" : "Enemy"
   %table.grid
     %thead
       %tr

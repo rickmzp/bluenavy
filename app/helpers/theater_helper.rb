@@ -4,7 +4,11 @@ module TheaterHelper
   end
 
   def render_theater(type, player)
-    render "layouts/theater", theater: player.send(type), type: type
+    render "layouts/theater", {
+      theater: player.send(type),
+      type: type,
+      player: player
+    }
   end
 
   def render_theater_cell(cell)
@@ -14,10 +18,11 @@ module TheaterHelper
       dom_classes << "attacked"
       dom_classes << cell.attack.result
     end
-    dom_classes << cell.point.to_sym.to_s.downcase
+    point_string = cell.point.to_sym.to_s.downcase
+    dom_classes << point_string
 
     capture_haml do
-      haml_tag :td, class: dom_classes do
+      haml_tag :td, class: dom_classes, data: { point: point_string } do
         haml_concat cell.icon
       end
     end

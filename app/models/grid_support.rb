@@ -15,7 +15,7 @@ module GridSupport
   end
 
   def extract_letter_number_from(symbol)
-    letter, number = symbol.to_s.scan(/^([A-J])(\d+)$/)[0]
+    letter, number = symbol.to_s.upcase.scan(/^([A-J])(\d+)$/)[0]
     ensure_valid_vector!(symbol, letter, number)
     number = number.to_i
     [letter, number]
