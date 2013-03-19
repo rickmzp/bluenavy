@@ -1,5 +1,10 @@
 %p Welcome, #{current_player}!
-- if current_game.started?
+- if current_game.finished?
+  - if current_player == current_game.winner
+    %p.game_result.you_win You win!
+  - else
+    %p.game_result.you_lose You lose! :(
+- elsif current_game.started?
   = render "command_center", game: current_game, player: current_player
 - else
   %p.waiting_for_an_opponent Waiting for an opponent…

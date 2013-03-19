@@ -88,6 +88,21 @@ class Game
     raise "unknown error"
   end
 
+  def finished?
+    winner.present?
+  end
+
+  def winner
+    return if player_1.blank? || player_2.blank?
+    return player_2 if player_1.defensive.controlled_cells.none?
+    return player_1 if player_2.defensive.controlled_cells.none?
+  end
+
+  def loser
+    return if winner.blank?
+    winner.opponent
+  end
+
   private
 
   def change_turn

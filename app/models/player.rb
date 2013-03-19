@@ -42,7 +42,8 @@ class Player
   end
 
   def defensive
-    Theater.with_deployments(ship_deployments + opponent.attacks)
+    enemy_attacks = opponent.try(:attacks) || []
+    Theater.with_deployments(ship_deployments + enemy_attacks)
   end
 
   def ship_deployments
@@ -59,6 +60,10 @@ class Player
 
   def to_sym
     player_in_game
+  end
+
+  def last_stand?
+    defensive.controlled_cells.length == 1
   end
 
   private

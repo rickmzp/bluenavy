@@ -7,7 +7,7 @@ Feature: Ending a game
     Then I am declared the winner
 
   Scenario: Player loses game
-    Given my navy is at their last stand
+    Given my navy is at its last stand
     And it is the enemy's turn to attack
     When the enemy fires a missle at my last remaining offensive
     Then I am declared the loser

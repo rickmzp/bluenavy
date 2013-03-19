@@ -27,6 +27,10 @@ class TheaterCell
     attack.present?
   end
 
+  def controlled?
+    has_ship? and not attacked?
+  end
+
   def ship_deployment
     deployment_of_type(ShipDeployment)
   end

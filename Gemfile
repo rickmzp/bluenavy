@@ -29,3 +29,7 @@ group :test do
   gem "factory_girl"
   gem "launchy"
 end
+
+group :development, :test do
+  gem "pry"
+end

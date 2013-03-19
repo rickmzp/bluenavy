@@ -31,18 +31,34 @@ class Theater
     grid[x][y]
   end
 
+  def any_controlled_cell
+    each_cell do |cell|
+      return cell if cell.controlled?
+    end
+    nil
+  end
+
+  def controlled_cells
+    cells.select do |cell|
+      cell.controlled?
+    end
+  end
+
   def any_empty_cell
     each_cell do |cell|
       return cell if cell.empty?
     end
+    nil
   end
 
   def each_cell
-    grid.each do |row|
-      row.each do |cell|
-        yield(cell)
-      end
+    cells.each do |cell|
+      yield(cell)
     end
+  end
+
+  def cells
+    grid.flatten
   end
 
   private
