@@ -91,9 +91,20 @@ class Game
   private
 
   def change_turn
-    return update_attributes! current_turn: :player_2 if current_turn == :player_1
-    return update_attributes! current_turn: :player_1 if current_turn == :player_2
+    return change_turn_to(:player_2) if current_turn == :player_1
+    return change_turn_to(:player_1) if current_turn == :player_2
     raise "unknown error"
+  end
+
+  def change_turn_to(player_sym)
+    update = update_attributes! current_turn: player_sym
+    send_pusher_event(:turn_change, player: player_sym)
+    update
+  end
+
+  def send_pusher_event(event, data = {})
+    return if not ENV.has_key?("PUSHER_SECRET")
+    Pusher.trigger("game_#{id}_events", event, data)
   end
 
   class OutOfTurn < Exception

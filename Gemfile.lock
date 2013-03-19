@@ -111,6 +111,9 @@ GEM
     nokogiri (1.5.6)
     origin (1.0.11)
     polyglot (0.3.3)
+    pusher (0.11.3)
+      multi_json (~> 1.0)
+      signature (~> 0.1.6)
     rack (1.4.5)
     rack-cache (1.2)
       rack (>= 0.4)
@@ -158,6 +161,7 @@ GEM
       multi_json (~> 1.0)
       rubyzip
       websocket (~> 1.0.4)
+    signature (0.1.6)
     sprockets (2.2.2)
       hike (~> 1.2)
       multi_json (~> 1.0)
@@ -194,6 +198,7 @@ DEPENDENCIES
   jquery-rails (~> 2.2.1)
   launchy
   mongoid (~> 3.1.2)
+  pusher (~> 0.11.3)
   rails (~> 3.2.12)
   rspec-rails
   sass-rails (~> 3.2.3)

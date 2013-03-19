@@ -29,6 +29,10 @@ class Player
     game.has_turn?(self)
   end
 
+  def waiting_for_turn?
+    !has_turn?
+  end
+
   def attack(point)
     game.attack_by(self, target: point)
   end

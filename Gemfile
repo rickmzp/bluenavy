@@ -7,6 +7,7 @@ gem "ice_nine", "~> 0.7.0"
 gem "jbuilder", "~> 1.0.2"
 gem "jquery-rails", "~> 2.2.1"
 gem "mongoid", "~> 3.1.2"
+gem "pusher", "~> 0.11.3"
 gem "rails", "~> 3.2.12"
 
 group :assets do

@@ -3,10 +3,16 @@
 <head>
   <title>BlueNavy</title>
   <%= stylesheet_link_tag "application", :media => "all" %>
+  <%= javascript_include_tag "//js.pusher.com/1.12/pusher.min.js" %>
   <%= javascript_include_tag "application" %>
   <%= csrf_meta_tags %>
 </head>
-<body data-current-player="<%= current_player.try(:to_sym) %>">
+<body
+  class="<%= body_dom_classes.join(" ") %>"
+  <% if current_game.present? %>
+  data-game-id="<%= current_game.try(:id) %>"
+  <% end %>
+  data-current-player="<%= current_player.try(:to_sym) %>">
 
 <%= yield %>
 
