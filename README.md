@@ -1,4 +1,11 @@
-### v0.0.3 (unreleased)
+### TODO
+
+  * Win and lose
+  * Refresh when opponent joins
+  * Session improvements
+  * Refactor theater/navy
+
+### master
 
   * auth + UX improvements
 
