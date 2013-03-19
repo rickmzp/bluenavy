@@ -9,6 +9,7 @@ gem "jquery-rails", "~> 2.2.1"
 gem "mongoid", "~> 3.1.2"
 gem "pusher", "~> 0.11.3"
 gem "rails", "~> 3.2.12"
+gem "thin", "~> 1.5.1"
 
 group :assets do
   gem "coffee-rails", "~> 3.2.1"
