@@ -7,7 +7,6 @@ require "cucumber/rake/task"
 require "rspec/core/rake_task"
 
 BlueNavy::Application.load_tasks
-Cucumber::Rake::Task.new
 RSpec::Core::RakeTask.new
 
 Rake::Task["default"].clear
