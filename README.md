@@ -1,3 +1,7 @@
+### v0.0.3 (unreleased)
+
+  * auth + UX improvements
+
 ### v0.0.2 (4.5 hours / 10.5 total)
 
   * Playable

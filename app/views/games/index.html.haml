@@ -2,16 +2,18 @@
 
 = button_to "Create Game", games_path
 
-%h2 Join Game
+- if @games.any?
 
-%table
-  %thead
-    %tr
-      %th Player
-      %th Join
-  %tbody
-    - @games.each do |game|
-      %tr{id: "game_#{game.id}"}
-        %td= game.player_1
-        %td
-          = button_to "Join Game", join_game_path(id: game.id)
+  %h2 Join Game
+
+  %table
+    %thead
+      %tr
+        %th Player
+        %th Join
+    %tbody
+      - @games.each do |game|
+        %tr{id: "game_#{game.id}"}
+          %td= game.player_1
+          %td
+            = button_to "Join Game", join_game_path(id: game.id)

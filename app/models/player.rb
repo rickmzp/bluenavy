@@ -10,7 +10,7 @@ class Player
   embedded_in :game, inverse_of: :player_1
   embedded_in :game, inverse_of: :player_2
 
-  field :user, type: User
+  belongs_to :user
   validates :user,
     presence: true
 

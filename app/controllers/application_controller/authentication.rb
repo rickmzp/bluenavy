@@ -4,6 +4,7 @@ module ApplicationController::Authentication
   included do
     before_filter :ensure_sign_in
     helper_method :current_user
+    helper_method :user_signed_in?
   end
 
   def ensure_sign_in
@@ -20,6 +21,10 @@ module ApplicationController::Authentication
 
   def sign_out
     self.current_user = nil
+  end
+
+  def user_signed_in?
+    current_user.present?
   end
 
   def current_user
